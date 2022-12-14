@@ -1,10 +1,6 @@
 const createModal = new bootstrap.Modal(document.querySelector("#createModal"));
 
-document.querySelector(".save-btn").addEventListener("click", (e) => {
-  const imageUrl = document.querySelector("#imageUrl").value;
-  const title = document.querySelector("#title").value;
-  const description = document.querySelector("#description").value;
-
+const buildContentCard = ({ imageUrl, title, description }) => {
   const contentCard = `
             <div class="col-md-3">
             <div class="card p-2 mb-4">
@@ -24,8 +20,32 @@ document.querySelector(".save-btn").addEventListener("click", (e) => {
             </div>
             `;
 
+  return contentCard;
+};
+
+const appendItemsToRow = (arrofItems) => {
   const row = document.querySelector(".row");
-  row.insertAdjacentHTML("beforeend", contentCard);
+  row.innerHTML = "";
+
+  arrofItems.forEach((item) => {
+    const newContentCard = buildContentCard(item);
+    row.insertAdjacentHTML("beforeend", newContentCard);
+  });
+};
+
+document.querySelector(".save-btn").addEventListener("click", (e) => {
+  const imageUrl = document.querySelector("#imageUrl").value;
+  const title = document.querySelector("#title").value;
+  const description = document.querySelector("#description").value;
+
+  const currentItems = JSON.parse(localStorage.getItem("items")) || [];
+
+  const newItem = { title, imageUrl, description };
+  const newItems = [...currentItems, newItem];
+
+  localStorage.setItem("items", JSON.stringify(newItems));
+
+  appendItemsToRow(newItems);
 
   createModal.hide();
 });
