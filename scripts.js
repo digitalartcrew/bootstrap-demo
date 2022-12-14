@@ -1,9 +1,9 @@
+const createModal = new bootstrap.Modal(document.querySelector("#createModal"));
+
 document.querySelector(".save-btn").addEventListener("click", (e) => {
   const imageUrl = document.querySelector("#imageUrl").value;
   const title = document.querySelector("#title").value;
   const description = document.querySelector("#description").value;
-
-  // debugger;
 
   const contentCard = `
             <div class="col-md-3">
@@ -26,6 +26,6 @@ document.querySelector(".save-btn").addEventListener("click", (e) => {
 
   const row = document.querySelector(".row");
   row.insertAdjacentHTML("beforeend", contentCard);
-});
 
-const createModal = new bootstrap.Modal(document.querySelector("#createModal"));
+  createModal.hide();
+});
